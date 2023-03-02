@@ -1,19 +1,30 @@
 apiVersion : apps/v1
 kind: Deployment
 metadata:
-  name: sampleapp 
+  name: komodor-demo 
+  annotations:
+    app.komodor.com/app: https://github.com/n3wt0n/Deploy-to-AKS
+    app.komodor.com/app.ref: #{SOURCEVERSION}#
+    app.komodor.com/deploy.link.davide: "https://ciao.gino.it"
 spec:
-  replicas: #replicaNo#
+  replicas: #{REPLICAS}#
   selector:
     matchLabels:
-      app: sampleapp
+      app: komodor-demo
   template:
     metadata:
       labels:
-        app: sampleapp 
+        app: komodor-demo 
     spec:
       containers:
-        - name: sampleapp 
-          image: k8sexamplesacr.azurecr.io/sampleapp
+        - name: komodor-demo 
+          image: acrdbtekdev.azurecr.io/komodor-demo
           ports:
           - containerPort: 80
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: 5000m
+            limits:
+              memory: "512Mi"
+              cpu: 5000m
